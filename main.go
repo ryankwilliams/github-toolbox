@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	var githubAccessToken, githubOrganization, githubRepository string
+	var githubAccessToken, githubOrganization, githubRepository, githubUsername, prState string
 
 	if githubAccessToken = os.Getenv("GITHUB_API_TOKEN"); githubAccessToken == "" {
 		log.Fatal("GITHUB_API_TOKEN undefined.")
@@ -25,8 +25,13 @@ func main() {
 		log.Fatal("GITHUB_REPOSITORY undefined.")
 	}
 
-	githubUsername := "ryankwilliams"
-	prState := "closed"
+	if githubUsername = os.Getenv("GITHUB_USERNAME"); githubUsername == "" {
+		log.Fatal("GITHUB_USERNAME undefined")
+	}
+
+	if prState = os.Getenv("PR_STATE"); prState == "" {
+		prState = "closed"
+	}
 
 	ctx := context.Background()
 	token := oauth2.StaticTokenSource(
